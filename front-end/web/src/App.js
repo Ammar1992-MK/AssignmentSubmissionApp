@@ -7,6 +7,7 @@ import Dashboard from './Components/Dashboard/dashboard';
 import HomePage from './Components/HomePage/homePage';
 import Login from './Components/Login/login';
 import PrivateRoute from './PrivateRoute/privateRoute';
+import AssignmentView from './Components/AssignmentView/assignment'
 
 function App() {
 
@@ -54,6 +55,13 @@ function App() {
           <Dashboard />
         </PrivateRoute>
       } />
+      <Route path="/assignments/:id" element={
+        <PrivateRoute>
+          <AssignmentView />
+        </PrivateRoute>
+      }
+
+      />
       <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<Login />} />
     </Routes>
