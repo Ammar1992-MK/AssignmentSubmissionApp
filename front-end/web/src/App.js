@@ -8,43 +8,11 @@ import HomePage from './Components/HomePage/homePage';
 import Login from './Components/Login/login';
 import PrivateRoute from './PrivateRoute/privateRoute';
 import AssignmentView from './Components/AssignmentView/assignment'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
 
-  const [access_token, setAccess_token] = useLocalState("", "jwt");
 
-  useEffect(() => {
-
-    if (!access_token) {
-      const reqBody = {
-        "username": "ammar",
-        "password": "asdfasdf"
-      }
-
-
-      fetch("api/auth/login", {
-
-        headers: {
-          "Content-Type": "application/json"
-        },
-        method: "post",
-        body: JSON.stringify(reqBody),
-      })
-        .then((response) => Promise.all([response.json(), response.headers]))
-        .then(([body, headers]) => {
-
-          const token = headers.get("authorization");
-          setAccess_token(token);
-
-        });
-    }
-
-  }, [])
-
-  useEffect(() => {
-    console.log(access_token);
-
-  }, [access_token])
 
 
 
