@@ -3,6 +3,7 @@ package com.ammar.CodeHub.web;
 import com.ammar.CodeHub.JwtUtil;
 import com.ammar.CodeHub.domain.User;
 import com.ammar.CodeHub.dto.AuthCredentialRequest;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -45,4 +47,20 @@ public class AuthController {
         }
 
     }
+    /*
+    localhost:8080/api/auth/validate?token=blahblahblah
+     */
+    @GetMapping("/validate")
+    public ResponseEntity<?> validateToken (@RequestParam String token, @AuthenticationPrincipal User user){
+
+        try{
+            Boolean isTokenValid = jwtUtil.validateToken(token,user);
+            return ResponseEntity.ok(isTokenValid);
+        }catch(ExpiredJwtException e){
+            return ResponseEntity.ok(false);
+        }
+
+
+    }
+
 }
